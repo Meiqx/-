@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace:对应哪个接口 --> 
+<mapper namespace="cn.tedu.mybatis.JobMapper">
+	<!-- 查询所有应聘者的信息 -->
+	<select id="findAll" resultType="cn.tedu.entity.Job">
+		SELECT 
+			*
+		FROM
+			job
+	</select>
+	
+	<!-- 查询所有应聘者的信息 -->
+	<select id="findDetail" resultType="cn.tedu.entity.Job">
+		SELECT 
+			*
+		FROM
+			job
+		WHERE
+			id=#{id}
+	</select>
+	
+	<!-- 查询已经入库的应聘者信息 -->
+	<select id="findJoinLibrary" resultType="cn.tedu.entity.Job">
+		SELECT 
+			*
+		FROM
+			job
+		WHERE
+			isstock=1
+	</select>
+	<!-- 添加应聘者信息 -->
+	<insert id="insertJob" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+			job(
+				name,sex,age,
+				job,specialty,experience,
+	 			studyeffort,school,tel,
+				email,createtime,text,
+				isstock
+			)
+		VALUES(
+				#{name},#{sex},#{age},
+				#{job},#{specialty},#{experience},
+	 			#{studyeffort},#{school},#{tel},
+				#{email},#{createtime},#{text},
+				#{isstock}
+		)
+	</insert>
+	
+	<!-- 编辑信息 -->
+	<update id="JobEditor" parameterType="cn.tedu.entity.Job" >
+		UPDATE
+			job
+		SET
+			name=#{name},
+			sex=#{sex},age=#{age},
+			job=#{job},specialty=#{specialty},
+			experience=#{experience},
+	 		studyeffort=#{studyeffort},
+	 		school=#{school},tel=#{tel},
+			email=#{email},createtime=#{createtime},
+			text=#{text},isstock=#{isstock}
+		WHERE
+			id=#{id}					
+	</update>
+	
+	<!-- 删除应聘者信息 -->
+	<delete id="deleteJob">
+		DELETE FROM
+			job
+		WHERE
+			id=#{id}
+	</delete>
+	
+	<!-- 入库 -->
+	<update id="jobJoinLibrary">
+		UPDATE
+			job
+		SET
+			isstock=1
+		WHERE
+			id=#{id}
+	</update>
+	
+	<!-- 移除库 -->
+	<update id="jobOutLibrary">
+		UPDATE
+			job
+		SET
+			isstock=0
+		WHERE
+			id=#{id}
+	</update>
+	
+	<!-- 查找要编辑的信息 -->
+	<select id="findJobEditor" resultType="cn.tedu.entity.Job">
+		SELECT 
+			*
+		FROM
+			job
+		WHERE
+			id=#{id}
+	</select>
+	
+
+</mapper>
+

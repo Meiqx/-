@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+	<resultMap type="cn.tedu.store.entity.Address" id="AddEntityMap">
+		<id column="aid" property="aid"/>
+		<result column="province_code" property="provinceCode"/>
+		<result column="province_name" property="provinceCode"/>
+		<result column="city_code" property="city_code"/>
+		<result column="city_name" property="city_name"/>
+		<result column="area_code" property="areaCode"/>
+		<result column="area_name" property="areaName"/>
+		<result column="is_default" property="isDefault"/>
+		<result column="is_delete" property="isDelete"/>
+		<result column="created_time" property="createdTime"/>
+		<result column="created_user" property="createdUser"/>
+		<result column="modified_user" property="modifiedUser"/>
+		<result column="modified_time" property="modifiedTime"/>
+	</resultMap>
+	<!-- 添加用户收货地址信息 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="aid">
+		INSERT INTO t_address(
+			aid,uid,name,province_code,province_name,city_code,
+			city_name,area_code,area_name,zip,
+			address,phone,tel,tag,is_default,
+			created_user,
+			created_time,modified_user,
+			modified_time
+			)
+		VALUES(
+			#{aid},#{uid},#{name},#{provinceCode},#{provinceName},#{cityCode},
+			#{cityName},#{areaCode},#{areaName},#{zip},
+			#{address},#{phone},#{tel},#{tag},#{isDefault},
+			#{createdUser},
+			#{createdTime},#{modifiedUser},
+			#{modifiedTime}
+		)			
+	</insert>
+	<!-- 查看用户地址信息条数 -->
+	<select id="countByUid" resultType="java.lang.Integer">
+		SELECT COUNT(
+				*
+		) 
+		FROM
+			t_address
+		WHERE
+			uid=#{uid} 
+	</select>
+	
+</mapper>
+	
+
+

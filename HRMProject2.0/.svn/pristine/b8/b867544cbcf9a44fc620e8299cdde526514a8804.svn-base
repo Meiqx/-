@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<title>薪资数据录入</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/me.css"/>
+	<link rel="stylesheet" href="static/css/2.2.4-semantic.min.css">
+	
+</head>
+<body>
+<!-- 导航 -->
+<nav class="ui inverted attached segment m-padded-tb-mini">
+	<div class="ui container">
+		<div class="ui inverted secondary stackable menu">
+			<h2 class="ui teal header item">人力资源管理</h2>
+			<div class="right m-item item m-mobile-hide menu">
+				<div class="ui dropdown item">
+					<div class="text">
+						<img class="ui avatar image" src="static/images/timg.jpg">
+						<span th:text="'欢迎您：'+${username}">管理员</span>
+					</div>
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<a href="LogOutServlet" class="item">注销</a>
+					</div>
+				</div>
+			</div>
+		
+		
+		</div>
+	</div>
+	<a href="" class="ui menu toggle black icon button m-right-top m-mobile-show">
+		<i class="sidebar icon"></i>
+
+	</a>
+</nav>
+
+<!-- 中间内容 -->
+<div class="ui container"  id="m-margin-top">
+	<div class="ui stackable grid">
+		
+		<div class="five wide column" id="list">
+			<div class="ui top attached segment">
+				<div class="ui header">人力资源管理</div>
+			</div>
+			<div class="ui attached segment">
+
+				<div class="ui styled fluid accordion">
+					<div class="title"><i class="dropdown icon"></i> 人员管理 </div>
+					<div class="content">
+						<a href="AddUserServlet" class="ui attached button segment m-margin-top-small">人员信息录入</a>
+						<a href="ShowUserServlet" class="ui attached button segment m-margin-top-small">人员信息查看</a>
+					</div>
+
+					<div class="title"><i class="dropdown icon"></i> 招聘管理 </div>
+					<div class="content">
+						<a href="JobInputServlet" class="ui attached button segment m-margin-top-small">应聘信息录入</a>
+						<a href="JobCheckServlet" class="ui attached button segment m-margin-top-small">应聘信息查看</a>
+						<a href="JobTalentPoolServlet" class="ui attached button segment m-margin-top-small">人才库信息</a>
+					</div>
+
+					<div class="title"><i class="dropdown icon"></i> 培训管理 </div>
+					<div class="content">
+						<a href="Y_TrainServlet" class="ui attached button segment m-margin-top-small">培训计划录入</a>
+						<a href="Y_TrainingToSeeServlet" class="ui attached button segment m-margin-top-small">培训计划查看</a>
+						<a href="Y_SummaryTrainingServlet" class="ui attached button segment m-margin-top-small">培训总结查看</a>
+					</div>
+
+					<div class="title"><i class="dropdown icon"></i> 奖惩管理 </div>
+					<div class="content">
+						<a href="BonusPenaltyRegister" class="ui attached button segment m-margin-top-small">奖惩信息登记</a>
+						<a href="ListBonusPenalty" class="ui attached button segment m-margin-top-small">奖惩信息查看</a>
+					</div>
+
+					<div class="title"><i class="dropdown icon"></i> 薪金管理 </div>
+					<div class="content active">
+						<a href="UpdateStipendservlet" class="ui attached button segment m-margin-top-small">薪金数据录入</a>
+						<a href="StipendServlet" class="ui attached button segment m-margin-top-small">薪金数据列表</a>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+		
+		<div class="eleven wide column">
+			 <div class="ui segment">
+				<form action="showAddStipend" method="post" class="ui form" onsubmit="return check()">
+				<div class="ui center aligned container"> 
+				  <h3 class="ui text-center">员工薪资信息录入</h3>
+                </div>
+				
+				<h4>人员信息</h4>
+				
+				<div class="ui container">
+					<div class="ui grid">
+						
+						<div class="eight wide column">
+						  *员工姓名：
+							<div class="ui input m-margin-tb-tiny">
+								<input type="text" name="name" placeholder="请输入员工姓名" id="name">
+							</div><br>
+							
+							<div class="ui form m-margin-tb-tiny">
+							   <div class="inline fields">
+							    <label for="fruit">性别：</label>
+							    <div class="field">
+							      <div class="ui radio checkbox">
+							        <input type="radio" name="fruit" checked="" tabindex="0" value="0" class="hidden">
+							        <label>男</label>
+							      </div>
+							    </div>
+							    <div class="field">
+							      <div class="ui radio checkbox">
+							        <input type="radio" name="fruit" tabindex="0" value="1" class="hidden">
+							        <label>女</label>
+							      </div>
+							    </div>
+							  </div> 
+							</div>  
+                           * 发薪日期：
+                            
+                            <div class="ui input m-margin-tb-tiny" >
+                              <input type="date" name="granttime" id="granttime">
+                            </div>
+							
+						</div>
+					  
+						<div class="eight wide column m-margin-tb-tiny">
+							*基本薪资：
+							<div class="ui input m-margin-tb-tiny">
+								<input type="text" name="basic" placeholder="请输入基本薪资" id="basic">
+							</div>
+							<br>
+							*工作餐补：
+							<div class="ui input m-margin-tb-tiny">
+								<input type="text" name="eat" placeholder="请输入工作餐补" id="eat">
+							</div><br>
+                                                                                     *住宿补贴： 
+                            <div class="ui input m-margin-tb-tiny">
+                                <input type="text" name="house" placeholder="请输入住宿补贴" id="house">
+                            </div><br>
+                                                                                     *全&nbsp;&nbsp;&nbsp;勤&nbsp;&nbsp;奖：
+                            <div class="ui input m-margin-tb-tiny">
+                                <input type="text" name="duty" placeholder="请输入全勤奖" id="duty">
+                            </div><br>
+                                                                                   * 所缴赋税：
+                            <div class="ui input m-margin-tb-tiny">
+                                <input type="text" name="scot" placeholder="请输入所缴赋税"  id="scot">
+                            </div><br>
+                                                                                      *罚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款：
+                            <div class="ui input m-margin-tb-tiny">
+                                <input type="text" name="punishment" placeholder="请输入罚款" id="punishment">
+                            </div><br>
+                                                                                     *额外补助：
+                            <div class="ui input m-margin-tb-tiny">
+                                <input type="text" name="other" placeholder="请输入额外补助" id="other">
+                            </div><br>
+                                                                                      总&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计：
+                            <div class="ui input m-margin-tb-tiny" >
+                                <input type="text" name="totalize" placeholder="请输入总计金额" id="totalize" onmouseover="All()" >
+                            </div>
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				<div class="ui bottm attached m-margin-tb-tiny">
+						<div class="ui middle aligned two column grid">
+							
+							<div class="right aligned column">
+								<button type="submit" class="ui mini teal basic button">保存</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+		 </div>
+		
+	</div>	
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/semantic.min.js"></script>
+
+<script type="text/javascript">
+    $('.ui.accordion')
+      .accordion()
+    ;
+$('.trigger.example .accordion')
+  .accordion({
+    selector: {
+      trigger: '.title .icon'
+    }
+  })
+;
+$('select.dropdown')
+  .dropdown()
+;
+
+
+$('.ui.radio.checkbox')
+  .checkbox()
+;
+
+ $('.menu.toggle').click(function(){
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    
+    
+/*计算工资总和*/    		
+function All(){
+    		var basic =　$.trim($("#basic").val());
+    		var eat = $.trim($("#eat").val());
+    		var house = $.trim($("#house").val());
+    		var scot = $.trim($("#scot").val());
+    		var duty = $.trim($("#duty").val());
+    		var punishment = $.trim($("#punishment").val());
+    		var other = $.trim($("#other").val());
+    		var granttime = $.trim($("#granttime").val());
+    		var t=basic*1+eat*1+house*1-scot*1+duty*1-punishment*1+other*1; 
+    		$("#totalize").val(""+t+"");
+    		}
+
+/*判断是否所有选项都已经填写*/
+function check(){
+			var name = $.trim($("#name").val());
+			var basic =　$.trim($("#basic").val());
+			var eat = $.trim($("#eat").val());
+			var house = $.trim($("#house").val());
+			var scot = $.trim($("#scot").val());
+			var duty = $.trim($("#duty").val());
+			var punishment = $.trim($("#punishment").val());
+			var other = $.trim($("#other").val());
+			var granttime = $.trim($("#granttime").val());
+    	　　if(name == null || name == ""||basic==null||basic==""||eat==null||eat==""
+    		||house==null||house==""||scot==null||scot==""||duty==null||duty==""
+    			||punishment==null||punishment==""||other==null||other==""||granttime==null||granttime==""){
+    		  alert("带*号的为必填选项!");
+    		  return false;
+    	　　}
+    	　　return true;
+    	  }   
+    
+
+		
+	
+
+</script>
+
+</html>

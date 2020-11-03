@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<!-- namespace:对应哪些接口 -->
+<mapper namespace="cn.tedu.mybatis.UserMapper">
+
+	<!-- id:抽象方法的名称 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+	
+	<!-- 需要执行的sql语句 部分参数使用 #{ }作为占位符,括号内是''user类"中的属性名-->
+		INSERT INTO t_user (username, password, 
+		 age,phone,email,department_id)
+		VALUES(#{username},#{password}, 
+		 #{age},#{phone},#{email},#{department_id})
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM t_user WHERE username=#{username}
+	</delete>
+	
+	
+	<update id="update">
+		UPDATE t_user SET password=#{pw}
+	</update>
+	
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM t_user
+	</select>
+	
+	<select id="selectName" resultMap="UserMap">
+		SELECT * FROM t_user WHERE id=#{id}		
+	</select>
+	<select id="selectNameMax" resultMap="UserMap">
+		SELECT * FROM t_user WHERE age=(SELECT MAX(age) FROM t_user)
+	</select>
+	
+	<!-- id:自定义名称 -->
+	<!-- type:将数据封装到哪种类型的对象中 -->
+	<resultMap type="cn.tedu.mybatis.User" id="UserMap">
+	<!-- id节点:配置主键对应关系 -->
+		<!-- column:查询结果的列名 --> 
+		<!-- property:属性名 -->
+		<id column="id" property="id"/>
+		<!-- result节点:配置其他对应关系-->
+		<result column="department_id" property="departmentId"/>
+		<result column="is_Delete" property="isDelete"/>
+	</resultMap>
+	<select id="findAll" resultMap="UserMap">
+		SELECT * FROM t_user ORDER BY id
+	</select>
+	
+	<select id="updateEmailById">
+		UPDATE t_user SET email=#{email} WHERE id=#{id}
+	</select>
+	
+	<delete id="deleteByIds">
+		DELETE FROM t_user WHERE id IN(
+			<foreach collection="list" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+	
+	<select id="find" resultMap="UserMap" >
+		SELECT 
+			* 		
+		FROM
+			t_user
+		<if test="where!=null">
+		WHERE
+			${where}
+		</if>
+		<if test="orderBy!=null">
+		ORDER BY
+			${orderBy}			
+		</if>
+		<if test="offset!=null">
+		LIMIT #{offset},#{count}
+		</if>		
+	</select>
+	
+	<select id="findVOById" resultType="cn.tedu.mybatis.UserVO">
+		SELECT
+			t_user.id,username,password,age,phone,email,name,
+			is_delete AS isDelete,department_id AS departmentId,
+			t_department.id
+		FROM
+			t_user
+		LEFT JOIN
+			t_department
+		ON
+			t_user.department_id=t_department.id
+		WHERE
+			t_user.id=#{id};
+	</select>
+	
+	
+</mapper>
+

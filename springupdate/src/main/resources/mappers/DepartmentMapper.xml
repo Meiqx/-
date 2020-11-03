@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<!-- 配置要用到的接口位置 -->
+<mapper namespace="cn.tedu.mybatis.DepartmentMapper">
+	<!-- sql语句 -->
+	<insert id="addMessage" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+			t_department(
+				id,name
+			) 
+		VALUES(
+			#{id},#{name}
+		)
+	</insert>
+	
+	<select id="findName" resultType="java.lang.String">
+		SELECT name FROM t_department ORDER BY id;
+	</select>
+	
+	<select id="findById" resultType="cn.tedu.mybatis.Department">
+		SELECT * FROM t_department WHERE id=#{id}
+	</select>
+	
+	<update id="updateNameById">
+		UPDATE t_department SET name=#{name} WHERE id=#{id}
+	</update>
+	
+	<resultMap type="cn.tedu.mybatis.DepartmentVO" id="DepartmentVOMap">
+		<id column="did" property="id"/>
+		<result column="name" property="name"/>
+		<!-- collection:用于配置1对多关系 -->
+		<!-- ofType:集合中的元素类型 -->
+		<collection property="users" ofType="cn.tedu.mybatis.User"><!-- 在使用<collection>后所有元素和列名都要配置对应关系 -->
+			<id column="uid" property="id"/>
+			<result column="username" property="username"/>
+			<result column="password" property="password"/>
+			<result column="age" property="age"/>
+			<result column="phone" property="phone"/>
+			<result column="email" property="email"/>
+			<result column="department_id" property="departentId"/>
+			<result column="is_delete" property="isDelete"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findVOById" resultMap="DepartmentVOMap">
+		SELECT
+			t_department.id AS did,
+			name,
+			t_user.id AS uid,
+			username,password,
+			age,phone,email,
+			is_delete AS isDelete,
+			department_id AS departmentId			
+		FROM
+			t_department
+		LEFT JOIN
+			t_user
+		ON
+			t_department.id=t_user.department_id
+		WHERE
+			t_department.id=#{id};
+	</select>
+</mapper>
+

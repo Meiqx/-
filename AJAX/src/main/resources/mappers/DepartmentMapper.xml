@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace：对应哪个接口 -->
+<mapper namespace="cn.tedu.mybatis.DepartmentMapper">
+
+	<!-- // 增加部门信息；
+	Integer insert(Department department); -->
+	<insert id="insert"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO t_department (
+			name
+		) VALUES (
+			#{name}
+		)
+	</insert>
+	
+	<!-- // 查询部门列表；
+	List<Department> findAll(); -->
+	<select id="findAll"
+		resultType="cn.tedu.mybatis.Department">
+		SELECT 
+			id,name 
+		FROM 
+			t_department 
+		ORDER BY 
+			id
+	</select>
+	
+	<!-- // 根据id查询某个部门的信息；
+	Department findById(Integer id); -->
+	<select id="findById"
+		resultType="cn.tedu.mybatis.Department">
+		SELECT 
+			id,name 
+		FROM 
+			t_department 
+		WHERE
+			id=#{id}
+	</select>
+	
+	<!-- // 根据id修改某个部门的名称。
+	Integer updateNameById(
+		@Param("id") Integer id, 
+		@Param("name") String name); -->
+	<update id="updateNameById">
+		UPDATE 
+			t_department 
+		SET 
+			name=#{name} 
+		WHERE 
+			id=#{id}
+	</update>
+	
+	<resultMap id="DepartmentVOMap" 
+		type="cn.tedu.mybatis.DepartmentVO">
+		<id column="did" property="id" />
+		<result column="name" property="name" />
+		<!-- collection：用于配置1对多关系 -->
+		<!-- ofType：集合中的元素的类型 -->
+		<collection property="users"
+			ofType="cn.tedu.mybatis.User">
+			<id column="uid" property="id" />
+			<result column="username" property="username" />
+			<result column="password" property="password" />
+			<result column="age" property="age" />
+			<result column="phone" property="phone" />
+			<result column="email" property="email" />
+			<result column="is_delete" property="isDelete" />
+			<result column="department_id" property="departmentId" />
+		</collection>
+	</resultMap>
+	
+	<!-- DepartmentVO findVOById(Integer id); -->
+	<select id="findVOById"
+		resultMap="DepartmentVOMap">
+		SELECT
+			t_department.id AS did,
+			name,
+			t_user.id AS uid,
+			username, password,
+			age, phone,
+			email, is_delete,
+			department_id
+		FROM
+			t_department
+		LEFT JOIN
+			t_user
+		ON
+			t_department.id=t_user.department_id
+		WHERE
+			t_department.id=#{id}
+	</select>
+	
+</mapper>
+
+
+
+
+
+

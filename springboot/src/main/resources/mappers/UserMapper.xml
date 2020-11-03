@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ 
+<!-- namespace:对应哪些接口 -->
+<mapper namespace="cn.tedu.springboot.mapper.UserMapper">
+	
+	<!-- id:抽象方法的名称 -->
+	<insert id="addnew" useGeneratedKeys="true" keyProperty="id" >	
+	<!-- 需要执行的sql语句 部分参数使用 #{ }作为占位符,括号内是"user类"中的属性名-->
+		INSERT INTO t_user(
+			username,password,
+			age,phone,
+			email,is_delete,
+			department_id
+		) 
+		VALUES(
+			#{username},#{password},#{age},
+			#{phone},#{email},#{isDelete},#{departmentId}
+		)
+	</insert>
+
+	<select id="findByUsername" resultType="cn.tedu.springboot.entity.User">
+		SELECT 
+			*
+		FROM 
+			t_user
+		WHERE
+			username=#{username}
+	</select>
+	
+	
+	
+</mapper>
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户注册</title>
+</head>
+<body>
+	<form id="form-reg" action="/user/reg" method="post">
+		<p>用户名:<input type="text" name="username"><span id="error" style="color:#ff;"></span></p>
+		<p>  密码:<input type="password" name="password"></p>
+		<p>  年龄:<input type="text" name="age"></p>
+		<p>  手机:<input type="text" name="phone"></p>
+		<p>  邮箱:<input type="text" name="email"></p>
+		<input id="btn-reg" type="button" value="注册">
+	</form>
+</body>
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	$("#btn-reg").click(function(){
+		$("#error").empty();
+		$.ajax({
+			"url":"/user/reg",
+			"data":$("#form-reg").serialize(),
+			"type":"post",
+			"dataType":"json",
+			"success":function(json){
+				if(json.state==1){
+					alert("注册成功");
+					//location.href="login.html";					
+				}else if(json.state==2){
+					alert("用户名已存在");
+					$("#error").html(json.message);
+				}
+			}
+		});
+	});
+	
+</script>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace:对应哪个接口 spring-dao中添加配置sql映射 -->
+<mapper namespace="cn.tedu.hrm.mapper.TrainMapper">
+
+
+</mapper>
+

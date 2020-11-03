@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 替换文本 -->
+<div th:text="${msg}">div1</div>
+<!-- 替换html -->
+<div th:utext="${msg2}">div2</div>
+<!-- 传递过来的是对象的话通过以下写法 -->
+<div th:text="${user.name}">div3</div>
+<div th:text="${user.age}">div4</div>
+<div th:text="${user.gender}">div5</div>
+
+<table border="1">
+	<tr>
+		<th>姓名</th>
+		<th>年龄</th>
+		<th>性别</th>
+	</tr>
+	<tr th:each="u : ${users}">
+		<td th:text=${u.name}>刘备</td>
+		<td th:text=${u.age}>20</td>
+		<td th:text=${u.gender}>男</td>
+	<tr>
+	<tr th:remove="all"><!-- 删除 -->
+		<td>关羽</td>
+		<td>18</td>
+		<td>男</td>
+	<tr>
+	<tr th:remove="all">
+		<td>张飞</td>
+		<td>15</td>
+		<td>男</td>
+	<tr>
+</table>
+</body>
+</html>

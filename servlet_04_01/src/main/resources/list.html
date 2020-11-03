@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1">
+	<tr>
+		<th>编号</th>
+		<th>姓名</th>
+		<th>工资</th>
+		<th>工作</th>
+	</tr>
+	<tr th:each="e : ${emps}">
+		<td th:text=${e.empno}>1</td>
+		<td th:text=${e.ename}>苍老师</td>
+		<td th:text=${e.sal}>20</td>
+		<td th:text=${e.job}>演员</td>
+	</tr>
+	
+</table>
+</body>
+</html>

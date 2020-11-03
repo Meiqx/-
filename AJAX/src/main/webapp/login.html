@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户登录</title>
+</head>
+<body>
+<h1>用户登录</h1>
+<form id="form-login" action="handle_login.do" method="post">
+  <p>请输入用户名</p>
+  <p><input name="username" /></p>
+  <p>请输入密码</p>
+  <p><input name="password" /></p>
+  <p><input type="button" onclick="login()" value="登录" /></p>
+</form>
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+function login() {
+	// alert("准备登录");
+	// jQuery中的$.ajax()函数用于提交异步请求并处理结果
+	// jQuery中的$.ajax()函数的参数是一个JSON对象
+	// url：将请求提交到哪里去
+	// data：请求参数
+	// type：请求类型
+	// dataType：服务器端响应的数据的类型，取值可以是text、xml、json，取决于响应头(Response Header)中的Content-Type
+	// success：响应成功(HTTP响应码是200)时的回调函数
+	$.ajax({
+		"url":"handle_login.do",
+		"data":$("#form-login").serialize(),
+		"type":"post",
+		"dataType":"json",
+		"success":function(obj) {
+			if (obj.state == 1) {
+				alert("登录成功");
+			} else if (obj.state == 2) {
+				alert("用户名不存在");
+			} else if (obj.state == 3) {
+				alert("密码错误");
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>
+
+
+
+

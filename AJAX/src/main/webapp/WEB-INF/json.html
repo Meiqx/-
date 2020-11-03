@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试使用JSON数据</title>
+</head>
+<body>
+<h1>测试使用JSON数据</h1>
+<script type="text/javascript">
+let obj = {
+	"name":"David",
+	"age":26,
+	"phone":"13800138026",
+	"email":"david@tedu.cn",
+	"skill":["JavaSE", "JavaOOP", "MySQL"],
+	"department":{
+		"id":3,
+		"name":"软件研发部"
+	}
+};
+
+console.log(obj.name);
+console.log(obj.age);
+console.log(obj.phone);
+console.log(obj.email);
+console.log(obj.skill.length);
+for (let i = 0; i < obj.skill.length; i++) {
+	console.log(obj.skill[i]);
+}
+console.log(obj.department.id);
+console.log(obj.department.name);
+</script>
+</body>
+</html>
+
+
+
+

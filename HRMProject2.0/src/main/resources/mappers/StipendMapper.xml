@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace:对应哪个接口 spring-dao中添加配置sql映射--> 
+<mapper namespace="cn.tedu.mybatis.StipendMapper">
+
+	<resultMap id="findSalary" type="cn.tedu.entity.Salary">
+		<id column="id" property="id"/>
+	</resultMap>
+	<insert id="insertStipend" >
+		INSERT INTO stipend(
+			name,basic,eat,house,duty,scot,punishment,other,granttime,totalize
+		) VALUES(
+			#{name},#{basic},#{eat},#{house},#{duty},#{scot},
+			#{punishment},#{other},#{granttime},#{totalize}
+		)
+	</insert>
+
+	<select id="findByName" resultType="cn.tedu.entity.Salary">
+		SELECT 
+			*
+		FROM
+			stipend
+		WHERE
+			name=#{name}
+	
+	</select>
+	
+	<select id="findAllStipend" resultMap="findSalary" >
+		SELECT
+			*
+		FROM
+			stipend
+	</select>
+	
+</mapper>
+

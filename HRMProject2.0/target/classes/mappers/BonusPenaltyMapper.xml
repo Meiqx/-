@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	<mapper namespace="cn.tedu.mybatis.BonusPenaltyMapper">
+	
+		<resultMap id="BonusPenalty"
+			type="cn.tedu.entity.BonusPenalty">
+			<id column="id" property="id"></id>
+			<result column="occurtime" property="occurTime"/>
+			<result column="registertime" property="registerTime"/>
+		</resultMap>
+
+		
+		<!-- 奖惩列表SQL -->
+		<select id="listAllBP" resultMap="BonusPenalty">
+			SELECT 
+				id,username,job,occurtime,reason 
+			FROM 
+				bonus_penalty
+		</select>
+		
+		<!-- 奖惩信息详情 -->
+		<select id="detailBP" resultMap="BonusPenalty">
+			SELECT * FROM bonus_penalty WHERE id=#{id}
+		</select>
+		
+		<!-- 通过用户名查询员工 -->
+		<select id="findByUsername" resultType="java.lang.Integer">
+			SELECT count(*) FROM bonus_penalty WHERE username=#{username}
+		</select>
+		
+		
+		<!-- 奖惩登记SQL -->
+		<insert id="addBonusPenalty" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO bonus_penalty(
+					username,job,occurtime,reason,price,
+					details,register,registertime
+				)VALUES(
+				#{username},#{job},#{occurtime},#{reason},
+				#{price},#{details},#{register},#{registerTime}
+				)
+		</insert>
+	
+		<update id="updateBonusPenalty">
+			UPDATE 
+				bonus_penalty 
+			SET 
+				job=#{job},occurtime=#{occurtime},reason=#{reason},
+				price=#{price},details=#{details},register=#{register},
+				registertime=#{registerTime} 
+			WHERE 
+				id=#{id}
+		</update>
+	
+		<delete id="deleteById">
+			DELETE FROM 
+				bonus_penalty 
+			WHERE id=#{id}
+		</delete>
+	
+	
+		
+	</mapper>

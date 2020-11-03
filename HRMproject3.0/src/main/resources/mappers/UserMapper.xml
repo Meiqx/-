@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace:对应哪个接口 spring-dao中添加配置sql映射--> 
+<mapper namespace="cn.tedu.hrm.mapper.UserMapper">
+	<resultMap id="UserEntity" type="cn.tedu.hrm.entity.Users">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="sex" property="sex"/>
+		<result column="birthday" property="birthday"/>
+		<result column="createtime" property="createtime"/>
+		<result column="isadmin" property="isadmin"/>
+		<result column="content" property="content"/>
+	</resultMap>
+	
+	<!-- 验证登录 -->
+	<select id="login" resultType="java.lang.Integer">
+		SELECT count(*) 
+		FROM user
+		WHERE
+			username=#{username}
+		AND
+			password=#{password}
+	</select>
+	
+	<!-- 插入用户信息 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user(
+			username,password,sex,
+			birthday,createtime,isadmin,
+			content
+		)values(
+			#{username},#{password},#{sex},
+			#{birthday},#{createtime},#{isadmin},
+			#{content}
+		)
+	</insert>
+
+	<!-- 查找出所有的用户 -->
+	<select id="findAll" resultMap="UserEntity">
+		SELECT * FROM user
+	</select>
+	
+	<!-- 查找出id对应的用户信息 -->
+	<select  id="findUserById" resultMap="UserEntity">
+		SELECT * FROM user
+		WHERE
+			id=#{id}
+	</select>
+	
+	<!-- 更改对应id的用户信息 -->
+
+	<update id="editUser">
+		UPDATE user
+		SET
+		username=#{username},password=#{password},sex=#{sex},
+		birthday=#{birthday},isadmin=#{isadmin}
+		WHERE id=#{id}
+	</update>
+	
+	<!-- 通过id删除用户信息 -->
+	<delete id="deleteUserById">
+		DELETE FROM user
+		WHERE
+		id=#{id}
+	</delete>
+	
+	<!-- 获取用户名匹配的个数 -->
+	<select id="equalByUsername" resultType="java.lang.Integer">
+	SELECT
+		count(*)
+	FROM user
+	WHERE username=#{username}
+	</select>
+	<!-- 获取密码匹配的个数 -->
+	<select id="equalByPWD" resultType="java.lang.Integer">
+	SELECT
+		count(*)
+	FROM user
+	WHERE password=#{password}
+	</select>
+	
+	
+</mapper>
+
